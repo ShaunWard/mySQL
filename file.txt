@@ -1,0 +1,110 @@
+mysql> source test.sql;
++----------+
+| count(*) |
++----------+
+|     3503 |
++----------+
+1 row in set (0.00 sec)
+
++----------+
+| count(*) |
++----------+
+|      275 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM Album LIMIT 5;
++---------+---------------------------------------+----------+
+| AlbumId | Title                                 | ArtistId |
++---------+---------------------------------------+----------+
+|       1 | For Those About To Rock We Salute You |        1 |
+|       2 | Balls to the Wall                     |        2 |
+|       3 | Restless and Wild                     |        2 |
+|       4 | Let There Be Rock                     |        1 |
+|       5 | Big Ones                              |        3 |
++---------+---------------------------------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Album LIMIT 15;
++---------+------------------------------------------+----------+
+| AlbumId | Title                                    | ArtistId |
++---------+------------------------------------------+----------+
+|       1 | For Those About To Rock We Salute You    |        1 |
+|       2 | Balls to the Wall                        |        2 |
+|       3 | Restless and Wild                        |        2 |
+|       4 | Let There Be Rock                        |        1 |
+|       5 | Big Ones                                 |        3 |
+|       6 | Jagged Little Pill                       |        4 |
+|       7 | Facelift                                 |        5 |
+|       8 | Warner 25 Anos                           |        6 |
+|       9 | Plays Metallica By Four Cellos           |        7 |
+|      10 | Audioslave                               |        8 |
+|      11 | Out Of Exile                             |        8 |
+|      12 | BackBeat Soundtrack                      |        9 |
+|      13 | The Best Of Billy Cobham                 |       10 |
+|      14 | Alcohol Fueled Brewtality Live! [Disc 1] |       11 |
+|      15 | Alcohol Fueled Brewtality Live! [Disc 2] |       11 |
++---------+------------------------------------------+----------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT Title, Name FROM Album
+    -> JOIN Artist ON Album.ArtistId = Artist.ArtistId
+    -> LIMIT 5;
++---------------------------------------+-----------+
+| Title                                 | Name      |
++---------------------------------------+-----------+
+| For Those About To Rock We Salute You | AC/DC     |
+| Balls to the Wall                     | Accept    |
+| Restless and Wild                     | Accept    |
+| Let There Be Rock                     | AC/DC     |
+| Big Ones                              | Aerosmith |
++---------------------------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> DESC Genre;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| GenreId | int          | NO   | PRI | NULL    | auto_increment |
+| Name    | varchar(120) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO Genre (Name) VALUES ('Trad');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT LAST_INSERT_ID();
++------------------+
+| LAST_INSERT_ID() |
++------------------+
+|               26 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Name FROM Genre WHERE GenreId = 26;
++------+
+| Name |
++------+
+| Trad |
++------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Genre SET Name = 'Traditional' WHERE Name = 'Trad';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT Name FROM Genre WHERE GenreId = 26;
++-------------+
+| Name        |
++-------------+
+| Traditional |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> DELETE FROM Genre WHERE Name = 'Traditional';
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT Name FROM Genre WHERE GenreId = 26;
+Empty set (0.00 sec)
+
+mysql> tee file2.txt
